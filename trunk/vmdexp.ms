@@ -81,7 +81,7 @@ rollout XSIExport "XSI Export" rolledUp:false silentErrors:false (
 		startFrame.enabled = endFrame.enabled = newState
 	
 	on generateShaderNamesPSet changed newState do \
-		stripOutPathBefore.enabled = newState
+		stripOutPathBefore.enabled = stripOutPathBeforeLabel.enabled = newState
 	
 	on bones changed newState do \
 		bonesAsNulls.enabled = newState
