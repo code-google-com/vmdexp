@@ -1,4 +1,4 @@
--- XSI Export script for 3ds Max and gmax to export to XSI 3.0 file format.
+-- XSI Export script for 3ds Max to export to XSI 3.0 file format.
 -- Copyright (C) 2013  Felix Patschkowski <felix.patschkowski@gmail.com>
 --
 -- This program is free software: you can redistribute it and/or modify
