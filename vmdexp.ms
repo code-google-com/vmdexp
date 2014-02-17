@@ -32,18 +32,22 @@ rollout XSIExport "XSI Export" rolledUp:false silentErrors:false (
 	checkbox flattenHierarchy "Flatten Hierarchy" pos:[320,40]
 	checkbox animationSubRange "Animation Sub-Range" enabled:true pos:[185,61]
 	checkbox rescale "Rescale" pos:[320,61] enabled:false
-	edittext startFrame "Frame:" pos:[235,85] enabled:true bold:false \
+	edittext startFrame "Frame:" pos:[235,85] enabled:false bold:false \
 		fieldWidth:34 text:startFrameText height:20
-	edittext endFrame "to frame:" pos:[310,85] enabled:true bold:false \
+	edittext endFrame "to frame:" pos:[310,85] enabled:false bold:false \
 		fieldWidth:34 text:endFrameText height:20
 	checkbox useLocalFilenamesForTextures "Use Local Filenames For Textures" \
 		pos:[185,119]
 	checkbox generateShaderNamesPSet "Generate Shader Names PSet" pos:[185,140] checked:true
-	edittext stripOutPathBefore "Strip out path before:" pos:[202,161] \
-		enabled:true bold:false fieldWidth:215 height:20 text:"C:\\base\\" \
-		offset:[-50,-50] labelOnTop:true
+	label stripOutPathBeforeLabel "Strip out path before:" pos:[202,161]
+	edittext stripOutPathBefore "" pos:[199,181] \
+		enabled:true bold:false fieldWidth:215 height:20 text:"C:\\base\\"
 	button okButton "OK" pos:[270,220] width:70
 	button cancel "Cancel" pos:[360,220] width:70
+	
+	fn clamp x xMin xMax = (
+	  if x < xMin then xMin else if x > xMax then xMax else x
+	)
 	
 	on animations changed newState do (
 		animationSubRange.enabled = newState
@@ -51,22 +55,26 @@ rollout XSIExport "XSI Export" rolledUp:false silentErrors:false (
 			startFrame.enabled = endFrame.enabled = newState			
 	)
 	
-	on startFrame changed txt do (
-		/*local num = txt as time
-		startFrame.text = if num == undefined then startFrameText else (
-			if num < animationRange.start then \
-				(((animationRange.start.ticks)/ticksPerFrame) as string) else \
-					startFrameText = (num.ticks/ticksPerFrame) as string
-		)*/
+	on startFrame entered txt do (
+		try (
+			startFrame.text = startFrameText = 
+				((clamp ((txt as integer) as time) \
+					animationRange.start animationRange.end).ticks /
+						ticksPerFrame) as string
+		) catch (
+			startFrame.text = startFrameText
+		)
 	)
 	
-	on endFrame changed txt do (
-		/*local num = txt as time
-		endFrame.text = if num == undefined then endFrameText else (
-			if num > animationRange.end then \
-				(((animationRange.end.ticks)/ticksPerFrame) as string) else \
-					endFrameText = (num.ticks/ticksPerFrame) as string
-		)*/
+	on endFrame entered txt do (
+		try (
+			endFrame.text = endFrameText = 
+				((clamp ((txt as integer) as time) \
+					animationRange.start animationRange.end).ticks /
+						ticksPerFrame) as string
+		) catch (
+			endFrame.text = endFrameText
+		)
 	)
 	
 	on animationSubRange changed newState do \
@@ -525,5 +533,5 @@ rollout XSIExport "XSI Export" rolledUp:false silentErrors:false (
 )
 
 if xsiExporter != undefined do closeRolloutFloater xsiExporter
-global xsiExporter = newRolloutFloater "XSI Export" 467 308
+global xsiExporter = newRolloutFloater "XSI Export" 467 319
 addRollout XSIExport xsiExporter
