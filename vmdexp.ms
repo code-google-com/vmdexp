@@ -1,5 +1,5 @@
 -- XSI Export script for 3ds Max to export to XSI 3.0 file format.
--- Copyright (C) 2013  Felix Patschkowski <felix.patschkowski@gmail.com>
+-- Copyright (C) 2014  Felix Patschkowski <felix.patschkowski@gmail.com>
 --
 -- This program is free software: you can redistribute it and/or modify
 -- it under the terms of the GNU General Public License as published by
