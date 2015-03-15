@@ -1,0 +1,3 @@
+When Raven Software released their SDK for Jedi Knight: Jedi Outcast resp. Jedi Knight: Jedi Academy they supplied a plugin for 3ds Max to export to XSI file format version 3 that is not compatible with newer versions of this software. Further more the latest built in XSI exporter is not capable of exporting to XSI file format version 3 which is required by the carcass compiler of the Jedi Knight SDK.
+
+This exporter only relies on the MAXScript interpreter and thus should be compatible with all Max versions beginning from version 4.
